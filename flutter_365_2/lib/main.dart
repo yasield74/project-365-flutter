@@ -11,7 +11,10 @@ class MyApp extends StatelessWidget {
     return MaterialApp(
         title: 'Day 2 Exodus App',
         debugShowCheckedModeBanner: false,
-        theme: ThemeData(useMaterial3: true),
-        home: HomePage());
+        theme: ThemeData(
+          useMaterial3: true,
+          colorSchemeSeed: const Color.fromARGB(255, 27, 155, 176),
+        ),
+        home: const HomePage());
   }
 }

@@ -1,14 +1,6 @@
+import 'package:fl_chart/fl_chart.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_365_2/example_destination.dart';
-
-const List<ExampleDestination> destinations = <ExampleDestination>[
-  ExampleDestination(
-      'Messages', Icon(Icons.widgets_outlined), Icon(Icons.widgets)),
-  ExampleDestination(
-      'Profile', Icon(Icons.format_paint_outlined), Icon(Icons.format_paint)),
-  ExampleDestination(
-      'Settings', Icon(Icons.settings_outlined), Icon(Icons.settings)),
-];
+import 'package:flutter_365_2/portfolio_page.dart';
 
 class HomePage extends StatelessWidget {
   const HomePage({super.key});
@@ -16,38 +8,100 @@ class HomePage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: SafeArea(
-        child: Row(
-          children: [
-            Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 5),
-              child: NavigationRail(
-                minWidth: 50,
-                destinations:
-                    destinations.map((ExampleDestination destination) {
-                  return NavigationRailDestination(
-                    label: Text(destination.label),
-                    icon: destination.icon,
-                    selectedIcon: destination.selectedIcon,
-                  );
-                }).toList(),
-                selectedIndex: 0,
+      body: Row(
+        children: [
+          // Navigation Menu
+          Expanded(
+            flex: 2, // takes 2/7 of the screen width
+            child: Material(
+              elevation: 4.0, // shadow effect
+              child: ListView(
+                children: [
+                  Container(
+                    height: 100,
+                    decoration: const BoxDecoration(
+                      color: Colors.white,
+                    ),
+                    child: const Center(
+                        child: Row(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      crossAxisAlignment: CrossAxisAlignment.center,
+                      children: [
+                        FlutterLogo(
+                          size: 30,
+                        ),
+                        SizedBox(
+                          width: 10,
+                        ),
+                        Column(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children: [
+                            Text('Exodus'),
+                            Text(
+                              'v1.0',
+                              style: TextStyle(
+                                  fontWeight: FontWeight.w300, fontSize: 8),
+                            ),
+                          ],
+                        )
+                      ],
+                    )),
+                  ),
+                  Row(
+                    children: [
+                      const Expanded(
+                        child: ListTile(
+                          leading: Icon(Icons.folder_shared_outlined),
+                          title: Text('Portfolio'),
+                        ),
+                      ),
+                      Container(
+                        color: const Color.fromARGB(255, 27, 155, 176),
+                        width: 4,
+                        height: 50,
+                      )
+                    ],
+                  ),
+
+                  Row(
+                    children: [
+                      const Expanded(
+                        child: ListTile(
+                          leading: Icon(Icons.wallet),
+                          title: Text('Wallet'),
+                        ),
+                      ),
+                      Container(
+                        color: const Color.fromARGB(255, 27, 155, 176),
+                        width: 4,
+                        height: 50,
+                      )
+                    ],
+                  ),
+                  Row(
+                    children: [
+                      const Expanded(
+                        child: ListTile(
+                          leading: Icon(Icons.compare_arrows),
+                          title: Text('Exchange'),
+                        ),
+                      ),
+                      Container(
+                        color: const Color.fromARGB(255, 27, 155, 176),
+                        width: 4,
+                        height: 50,
+                      )
+                    ],
+                  ),
+                  // ... other list tiles
+                ],
               ),
             ),
-            const VerticalDivider(thickness: 1, width: 1),
-            Expanded(
-                child: Container(
-              color: Colors.blue,
-            ))
-          ],
-        ),
-      ),
-      endDrawer: NavigationDrawer(
-        children: [
-          destinations.map((ExampleDestination destination) {
-            return NavigationDrawerDestination(
-                icon: destination.icon, label: destination.label),;
-          }).toList()
+          ),
+          // Content Area
+          const Expanded(
+              flex: 5, // takes 5/7 of the screen width
+              child: PortfolioPage()),
         ],
       ),
     );
