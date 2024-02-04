@@ -1,12 +1,16 @@
 import 'package:fl_chart/fl_chart.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_365_2/page_provider.dart';
 import 'package:flutter_365_2/portfolio_page.dart';
+import 'package:provider/provider.dart';
 
 class HomePage extends StatelessWidget {
   const HomePage({super.key});
 
   @override
   Widget build(BuildContext context) {
+    int pageNumber = context.watch<PageProvider>().page;
+
     return Scaffold(
       body: Row(
         children: [
@@ -99,6 +103,7 @@ class HomePage extends StatelessWidget {
             ),
           ),
           // Content Area
+
           const Expanded(
               flex: 5, // takes 5/7 of the screen width
               child: PortfolioPage()),
