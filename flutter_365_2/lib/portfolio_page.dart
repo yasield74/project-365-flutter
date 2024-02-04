@@ -6,7 +6,7 @@ class PortfolioPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      color: Colors.white,
+      color: Colors.blue[100],
       child: const Center(child: Text("Portfolio")),
     );
   }

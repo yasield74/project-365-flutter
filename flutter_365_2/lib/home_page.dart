@@ -1,7 +1,10 @@
 import 'package:fl_chart/fl_chart.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_365_2/exchange_page.dart';
 import 'package:flutter_365_2/page_provider.dart';
 import 'package:flutter_365_2/portfolio_page.dart';
+import 'package:flutter_365_2/wallet_page.dart';
+import 'package:flutter_365_2/widgets/custom_list_tile_widget.dart';
 import 'package:provider/provider.dart';
 
 class HomePage extends StatelessWidget {
@@ -9,16 +12,39 @@ class HomePage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    int pageNumber = context.watch<PageProvider>().page;
+    Widget page = const PortfolioPage();
+    int pageN = context.watch<PageProvider>().pageNo;
+
+    switch (pageN) {
+      case 0:
+        page = const PortfolioPage();
+        break;
+      case 1:
+        page = const WalletPage();
+        break;
+      case 2:
+        page = const ExchangePage();
+        break;
+      case 3:
+        page = const PortfolioPage();
+        break;
+    }
+
+    if (pageN == 0) {
+    } else if (pageN == 1) {
+      page = const WalletPage();
+    } else if (pageN == 2) {
+      page == const ExchangePage();
+    }
 
     return Scaffold(
       body: Row(
         children: [
           // Navigation Menu
           Expanded(
-            flex: 2, // takes 2/7 of the screen width
+            flex: 2,
             child: Material(
-              elevation: 4.0, // shadow effect
+              elevation: 4.0,
               child: ListView(
                 children: [
                   Container(
@@ -51,62 +77,40 @@ class HomePage extends StatelessWidget {
                       ],
                     )),
                   ),
-                  Row(
-                    children: [
-                      const Expanded(
-                        child: ListTile(
-                          leading: Icon(Icons.folder_shared_outlined),
-                          title: Text('Portfolio'),
-                        ),
-                      ),
-                      Container(
-                        color: const Color.fromARGB(255, 27, 155, 176),
-                        width: 4,
-                        height: 50,
-                      )
-                    ],
-                  ),
-
-                  Row(
-                    children: [
-                      const Expanded(
-                        child: ListTile(
-                          leading: Icon(Icons.wallet),
-                          title: Text('Wallet'),
-                        ),
-                      ),
-                      Container(
-                        color: const Color.fromARGB(255, 27, 155, 176),
-                        width: 4,
-                        height: 50,
-                      )
-                    ],
-                  ),
-                  Row(
-                    children: [
-                      const Expanded(
-                        child: ListTile(
-                          leading: Icon(Icons.compare_arrows),
-                          title: Text('Exchange'),
-                        ),
-                      ),
-                      Container(
-                        color: const Color.fromARGB(255, 27, 155, 176),
-                        width: 4,
-                        height: 50,
-                      )
-                    ],
-                  ),
-                  // ... other list tiles
+                  CustomListTileaWidget(
+                      title: 'Porfolio',
+                      isSelected: pageN == 0 ? true : false,
+                      onTab: () {
+                        context.read<PageProvider>().changePage(0);
+                      },
+                      icon: Icons.folder_copy_outlined),
+                  CustomListTileaWidget(
+                      isSelected: pageN == 1 ? true : false,
+                      title: 'Wallet',
+                      onTab: () {
+                        context.read<PageProvider>().changePage(1);
+                      },
+                      icon: Icons.wallet_outlined),
+                  CustomListTileaWidget(
+                      isSelected: pageN == 2 ? true : false,
+                      title: 'Exchange',
+                      onTab: () {
+                        context.read<PageProvider>().changePage(2);
+                      },
+                      icon: Icons.compare_arrows_rounded),
+                  CustomListTileaWidget(
+                      isSelected: pageN == 3 ? true : false,
+                      title: 'Other',
+                      onTab: () {
+                        context.read<PageProvider>().changePage(3);
+                      },
+                      icon: Icons.compare_arrows_rounded),
                 ],
               ),
             ),
           ),
-          // Content Area
 
-          const Expanded(
-              flex: 5, // takes 5/7 of the screen width
-              child: PortfolioPage()),
+          Expanded(flex: 5, child: page),
         ],
       ),
     );
